@@ -1,0 +1,9 @@
+html{
+  background-color: darkslategray;
+}
+.container-fluid{
+  background-color: darkslategray;
+}
+input[type="text"]{
+  background: transparent;
+}
