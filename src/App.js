@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component,usestate } from "react";
 import "./App.css";
 import Plan from "./Plan";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -7,6 +7,8 @@ class App extends Component {
     items: [],
     text: "",
   };
+  // const [toggleSubmit, setToggleSubmit] = usestate(true);
+
   onHandleChange = (e) => {
     this.setState({ text: e.target.value });
   };
@@ -16,13 +18,22 @@ class App extends Component {
       this.setState({ items: items, text: "" });
     }
   };
-  handleDelete = id => {
-    const OldItems=[...this.state.items];
-    const items=OldItems.filter((element,i)=>{
-      return i!==id
+  handleDelete = (id) => {
+    const OldItems = [...this.state.items];
+    const items = OldItems.filter((element, i) => {
+      return i !== id;
     });
-    this.setState({items:items});
-  }
+    this.setState({ items: items });
+  };
+  handleUpdate = (id) => {
+    debugger;
+    const oldDataItem=[...this.state.items];
+    let newEditItem = oldDataItem.find((elem) => {
+      return elem.id === id;
+    });
+    //let newEditItem=oldDataItem.findIndex(oldDataItem=>oldDataItem.id===id);
+    alert(newEditItem);
+  };
   render() {
     return (
       <div className="container-fluid my-5">
@@ -50,7 +61,15 @@ class App extends Component {
               <div className="container-fluid">
                 <ul className="list-unstyled row m-5">
                   {this.state.items.map((value, i) => {
-                    return <Plan key={i} value={value} id={i} sendData={this.handleDelete} />;
+                    return (
+                      <Plan
+                        key={i}
+                        value={value}
+                        id={i}
+                        sendData={this.handleDelete}
+                        editData={this.handleUpdate}
+                      />
+                    );
                   })}
                 </ul>
               </div>
